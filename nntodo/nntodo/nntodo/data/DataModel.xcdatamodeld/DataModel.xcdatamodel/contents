@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24E263" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="File" representedClassName=".File" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="String"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="location" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Kategorie" representedClassName=".Kategorie" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String"/>
+        <attribute name="generate_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="is_hidden" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="revised_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sort_num" optional="YES" attributeType="String"/>
+        <relationship name="works" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Work" inverseName="kategorie" inverseEntity="Work"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="sort_num"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Repetition" representedClassName=".Repetition" syncable="YES">
+        <attribute name="closing_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="starting_date" optional="YES" attributeType="String"/>
+        <relationship name="works" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Work" inverseName="repetition" inverseEntity="Work"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Subwork" representedClassName=".Subwork" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="is_completed" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="sort_num" attributeType="String"/>
+        <relationship name="work" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Work" inverseName="subworks" inverseEntity="Work"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Work" representedClassName=".Work" syncable="YES">
+        <attribute name="closing_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="created_date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="is_completed" optional="YES" attributeType="Boolean" defaultValueString="N" usesScalarValueType="YES"/>
+        <attribute name="is_star" optional="YES" attributeType="Boolean" defaultValueString="N" usesScalarValueType="YES"/>
+        <attribute name="memo" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="starting_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="kategorie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kategorie" inverseName="works" inverseEntity="Kategorie"/>
+        <relationship name="repetition" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Repetition" inverseName="works" inverseEntity="Repetition"/>
+        <relationship name="subworks" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Subwork" inverseName="work" inverseEntity="Subwork"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+</model>
