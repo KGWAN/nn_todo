@@ -27,21 +27,27 @@ struct ViewDetailWork: View {
     @EnvironmentObject var theme: ThemeManager
     @Environment(\.managedObjectContext) private var viewContext
     
+    let list = Dummy.listMenuOtherViewWork.compactMap {
+        TypeMenu(dictionary: $0)
+    }
+    
     var body: some View {
         if let work = works.first {
             ZStack(alignment: .top) {
                 ScrollView(.vertical) {
                     HStack {
-                        Button {
-                            isOpenedPopupSelectingKategory.toggle()
-                        } label: {
-                            Text("카테고리 없음")
-                                .foregroundStyle(theme.foregroundWeek)
-                                .padding(5)
-                                .background(theme.btnBgArea)
-                                .cornerRadius(20)
-                        }
+//                        Button {
+//                            isOpenedPopupSelectingKategory.toggle()
+//                        } label: {
+//                            Text("카테고리 없음")
+//                                .foregroundStyle(theme.foregroundWeek)
+//                                .padding(5)
+//                                .background(theme.btnBgArea)
+//                                .cornerRadius(20)
+//                        }
                         
+
+ 
                         Spacer()
                     }
                     TextEditerNn(
@@ -81,8 +87,21 @@ struct ViewDetailWork: View {
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 50)
-                
-                ViewHeader(title: "")
+                VStack(alignment: .leading) {
+                    ViewHeader(title: "")
+                    Text("카테고리 없음")
+                        .foregroundStyle(theme.foregroundWeek)
+                        .padding(5)
+                        .background(theme.btnBgArea)
+                        .cornerRadius(20)
+                        .containerPicker(
+                            alignment: .left,
+                            list: list) { item in
+                                print("\(item.name)")
+                            } popup: { item in
+                                Text("\(item.name)")
+                            }
+                }
             }
             .onAppear {
                 

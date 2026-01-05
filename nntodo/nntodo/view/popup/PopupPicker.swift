@@ -47,7 +47,16 @@ struct PopupPicker<T: Identifiable ,C: View>: View {
         .fixedSize(horizontal: true, vertical: false)
         .padding(.vertical, paddingVertical)
         .padding(.horizontal, paddingHorizontal)
-        .background(theme.background)
+        .background(
+            GeometryReader { geo in
+                Color.clear
+                    .preference(
+                           key: SizePreferenceKey.self,
+                           value: geo.size
+                       )
+            }
+        )
+        .background(theme.background)  
         .cornerRadius(cornerRadius)
         .shadow(color: theme.shadow, radius: shadowRadius)
     }
